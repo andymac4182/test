@@ -17,12 +17,10 @@ jobs:
       
       - id: first_environment
         run: |
-          echo $GITHUB_EVENT_PATH
-          cat $GITHUB_EVENT_PATH
           CURRENT_LABELS=$(jq -r '[ .issue.labels[] | select(.name | debug | startswith("environment-")) | .name ] | .[]' $GITHUB_EVENT_PATH)
           
           $CURRENT_LABELS | while read i; do
-            echo Labels $i
+            echo "Labels $i"
           done               
           
           
