@@ -27,6 +27,12 @@ jobs:
           echo "Current environment index $CURRENT_ENVIRONMENT_INDEX"
           echo "Environment length $ENVIRONMENT_LENGTH"
           
+          if [ $NEXT_ENVIRONMENT = "null" ]
+          then
+            echo "No next environment"
+            exit 1
+          fi
+          
           #  echo "::set-output name=first-environment::$( echo "$FIRSTENVIRONMENT" )"
           
       # Runs a set of commands using the runners shell
