@@ -12,7 +12,13 @@ jobs:
     permissions:
       issues: write
       repository-projects: write
+      contents: read
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2.4.0
+      
+      - run:  jq '.environments[0]' test.json
+      
       - id: createissue
         name: Create Issue
         uses: actions-cool/issues-helper@v3
