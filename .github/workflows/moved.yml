@@ -1,8 +1,8 @@
 name: CI
 
 on:
-  project_card:
-    types: [moved]
+  issue_comment:
+    types: [created]
 
 jobs:
   build:
