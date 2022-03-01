@@ -17,7 +17,7 @@ jobs:
       
       - id: first_environment
         run: |
-          ENVIRONMENT_NAME="staging"
+          ENVIRONMENT_NAME="production"
           CURRENT_ENVIRONMENT_INDEX=$(jq '[ .environments[] | . == "'"$ENVIRONMENT_NAME"'"] | index(true)' environments.json)
           ENVIRONMENT_LENGTH=$(jq -r '.environments | length' environments.json)
           NEXT_ENVIRONMENT=$(jq -r '.environments['"$((CURRENT_ENVIRONMENT_INDEX + 1))"']' environments.json)
