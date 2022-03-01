@@ -1,0 +1,20 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Create Project Card
+
+# Controls when the workflow will run
+on:
+  workflow_dispatch:
+  
+jobs:
+  assign:
+    name: Assign issues to project
+    runs-on: ubuntu-latest
+    permissions:
+      repository-projects: write
+    steps:
+      - name: Assign issues to project
+        uses: technote-space/create-project-card-action@v1
+        with:
+          PROJECT: Releases
+          COLUMN: development
