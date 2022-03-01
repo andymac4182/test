@@ -18,12 +18,17 @@ jobs:
       - id: first_environment
         run: |
           CURRENT_ENVIRONMENT_INDEX=-1
-          jq -r '[ .issue.labels[] | select(.name | debug | startswith("environment-")) | .name ] | .[]' $GITHUB_EVENT_PATH | while read i; do
+          jq -r '[ .issue.labels[] | select(.name | startswith("environment-")) | .name ] | .[]' $GITHUB_EVENT_PATH | while read i; do
             ENVIRONMENT_NAME="${i/environment-/}"
             echo "Checking $ENVIRONMENT_NAME"
             ENVIRONMENT_INDEX=$(jq '[ .environments[] | . == "'"$ENVIRONMENT_NAME"'"] | index(true)' environments.json)
+            echo "Environment index $ENVIRONMENT_INDEX"
+            
             if (( ENVIRONMENT_INDEX > CURRENT_ENVIRONMENT_INDEX )); then
+              echo "Updating environment index to $ENVIRONMENT_INDEX"
               CURRENT_ENVIRONMENT_INDEX=$ENVIRONMENT_INDEX
+            else
+              echo "Not updating environment index to $ENVIRONMENT_INDEX"
             fi
           done               
                    
