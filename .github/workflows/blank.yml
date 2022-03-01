@@ -9,6 +9,9 @@ on:
 jobs:
   create-issue:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      repository-projects: write
     steps:
       - id: createissue
         name: Create Issue
@@ -21,3 +24,12 @@ jobs:
           labels: 'release'
       - name: Check outputs
         run: echo "Outputs issue_number is ${{ steps.createissue.outputs.issue-number }}"
+      - name: Create or Update Project Card
+        id: coupc
+        uses: peter-evans/create-or-update-project-card@v1
+        with:
+          project-name: Releases
+          column-name: development
+          issue-number: ${{ steps.createissue.outputs.issue-number }}
+      - name: Check output
+        run: echo ${{ steps.coupc.outputs.card-id }}
