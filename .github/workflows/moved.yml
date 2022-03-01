@@ -7,7 +7,28 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      repository-projects: write
+      contents: read
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2.4.0
+      
+      - id: first_environment
+        run: |
+          ENVIRONMENT_NAME="staging"
+          CURRENT_ENVIRONMENT_INDEX=$(jq '[ .environments[] | debug | . == "'"$ENVIRONMENT_NAME"'"] | index(true)' environments.json)
+          ENVIRONMENT_LENGTH=$(jq '.environments | length' environments.json)
+          NEXT_ENVIRONMENT=$(jq '.environments['"$((CURRENT_ENVIRONMENT_INDEX + 1))"' | length' environments.json)
+
+          echo "Current environment name $ENVIRONMENT_NAME"
+          echo "Next environment name $NEXT_ENVIRONMENT"
+          echo "Current environment index $CURRENT_ENVIRONMENT_INDEX"
+          echo "Environment length $ENVIRONMENT_LENGTH"
+          
+          #  echo "::set-output name=first-environment::$( echo "$FIRSTENVIRONMENT" )"
+          
       # Runs a set of commands using the runners shell
       - name: Dump context
         uses: crazy-max/ghaction-dump-context@v1
