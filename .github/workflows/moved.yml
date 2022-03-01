@@ -19,7 +19,7 @@ jobs:
         run: |
           echo $GITHUB_EVENT_PATH
           cat $GITHUB_EVENT_PATH
-          jq '[ event.issue.labels[] | startswith("environment-") ]' $GITHUB_EVENT_PATH
+          jq '[ issue.labels[] | startswith("environment-") ]' $GITHUB_EVENT_PATH
           ENVIRONMENT_NAME="staging"
           CURRENT_ENVIRONMENT_INDEX=$(jq '[ .environments[] | . == "'"$ENVIRONMENT_NAME"'"] | index(true)' environments.json)
           ENVIRONMENT_LENGTH=$(jq -r '.environments | length' environments.json)
