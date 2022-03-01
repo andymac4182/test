@@ -17,7 +17,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2.4.0
       
-      - run:  jq '.environments[0]' test.json
+      - run:  jq '.environments[0]' environments.json
       
       - id: createissue
         name: Create Issue
