@@ -19,7 +19,7 @@ jobs:
         run: |
           CURRENT_LABELS=$(jq -r '[ .issue.labels[] | select(.name | debug | startswith("environment-")) | .name ] | .[]' $GITHUB_EVENT_PATH)
           
-          $CURRENT_LABELS | while read i; do
+          jq -r '[ .issue.labels[] | select(.name | debug | startswith("environment-")) | .name ] | .[]' $GITHUB_EVENT_PATH | while read i; do
             echo "Labels $i"
           done               
           
