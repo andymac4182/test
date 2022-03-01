@@ -7,14 +7,14 @@ on:
   workflow_dispatch:
   
 jobs:
-  assign:
-    name: Assign issues to project
+  create-issue:
     runs-on: ubuntu-latest
-    permissions:
-      repository-projects: write
     steps:
-      - name: Assign issues to project
-        uses: technote-space/create-project-card-action@v1
+      - name: Create issue
+        uses: actions-cool/issues-helper@v3
         with:
-          PROJECT: Releases
-          COLUMN: development
+          actions: 'create-issue'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: 'xxxx'
+          body: 'xxxx'
+          labels: 'release'
