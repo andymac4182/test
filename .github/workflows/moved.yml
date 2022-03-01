@@ -17,13 +17,15 @@ jobs:
       
       - id: first_environment
         run: |
+          CURRENT_ENVIRONMENT_INDEX=-1
           jq -r '[ .issue.labels[] | select(.name | debug | startswith("environment-")) | .name ] | .[]' $GITHUB_EVENT_PATH | while read i; do
-            echo "Labels ${i/environment-/}"
+            ENVIRONMENT_NAME="${i/environment-/}"
+            ENVIRONMENT_INDEX > =$(jq '[ .environments[] | . == "'"$ENVIRONMENT_NAME"'"] | index(true)' environments.json)
+            if (( ENVIRONMENT_INDEX > CURRENT_ENVIRONMENT_INDEX )); then
+              CURRENT_ENVIRONMENT_INDEX=$ENVIRONMENT_INDEX
+            fi
           done               
-          
-          
-          ENVIRONMENT_NAME="staging"
-          CURRENT_ENVIRONMENT_INDEX=$(jq '[ .environments[] | . == "'"$ENVIRONMENT_NAME"'"] | index(true)' environments.json)
+                   
           ENVIRONMENT_LENGTH=$(jq -r '.environments | length' environments.json)
           NEXT_ENVIRONMENT=$(jq -r '.environments['"$((CURRENT_ENVIRONMENT_INDEX + 1))"']' environments.json)
 
