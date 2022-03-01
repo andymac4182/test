@@ -19,7 +19,7 @@ jobs:
       
       - id: first_environment
         run: |
-          FIRSTENVIRONMENT="$(jq '.environments[0]' environments.json)"
+          FIRSTENVIRONMENT="$(jq -r '.environments[0]' environments.json)"
           echo "::set-output name=first-environment::$( echo "$FIRSTENVIRONMENT" )"
       
       - id: createissue
@@ -30,7 +30,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           title: 'xxxx'
           body: 'xxxx'
-          labels: 'release ${{ steps.first_environment.outputs.first-environment }}'
+          labels: 'release,${{ steps.first_environment.outputs.first-environment }}'
       - name: Check outputs
         run: echo "Outputs issue_number is ${{ steps.createissue.outputs.issue-number }}"
       - name: Create or Update Project Card
