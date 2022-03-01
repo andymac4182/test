@@ -30,7 +30,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           title: 'xxxx'
           body: 'xxxx'
-          labels: 'release,${{ steps.first_environment.outputs.first-environment }}'
+          labels: 'release,environment-${{ steps.first_environment.outputs.first-environment }}'
       - name: Check outputs
         run: echo "Outputs issue_number is ${{ steps.createissue.outputs.issue-number }}"
       - name: Create or Update Project Card
