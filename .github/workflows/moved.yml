@@ -17,6 +17,11 @@ jobs:
       
       - id: first_environment
         run: |
+          ISSUE_TITLE=$(jq -r '.issue.title' $GITHUB_EVENT_PATH)
+          VERSION="${ISSUE_TITLE/[Release] /}"
+          echo "Version is $VERSION"
+          
+          
           CURRENT_ENVIRONMENT_INDEX=-1
           while read i; do
             ENVIRONMENT_NAME="${i/environment-/}"
