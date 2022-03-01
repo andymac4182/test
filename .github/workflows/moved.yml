@@ -18,7 +18,7 @@ jobs:
       - id: first_environment
         run: |
           # jq '[ .[] | startswith("environment-") ]' < 
-          echo "${{ toJson(github.event.issue) }}"
+          echo -e "${{ toJson(github.event.issue.labels) }}"
           ENVIRONMENT_NAME="staging"
           CURRENT_ENVIRONMENT_INDEX=$(jq '[ .environments[] | . == "'"$ENVIRONMENT_NAME"'"] | index(true)' environments.json)
           ENVIRONMENT_LENGTH=$(jq -r '.environments | length' environments.json)
