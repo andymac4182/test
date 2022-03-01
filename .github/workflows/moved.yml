@@ -18,7 +18,7 @@ jobs:
       - id: first_environment
         run: |
           ISSUE_TITLE=$(jq -r '.issue.title' $GITHUB_EVENT_PATH)
-          VERSION="${ISSUE_TITLE/[Release] /}"
+          VERSION="${ISSUE_TITLE/\[Release\] /}"
           echo "Version is $VERSION"
           
           
